@@ -15,15 +15,21 @@ void initialize(EPtr L)
 
 void insertPos(EPtr L, int data, int position)
 {
-    if(position < 0 || position > L->count || L->count == MAX)
+    if(L->count == MAX)
     {
         printf("List is full\n");
         return;
     }
 
-    for(int i - L->count; i > position; i--)
+    if(position < 0 || position > L->count)
     {
-        L->elem[i] = L->elem[i - l];
+        printf("Invalid position\n");
+        return;
+    }
+
+    for(int i = L->count; i > position; i--)
+    {
+        L->elem[i] = L->elem[i - 1];
     }
 
     L->elem[position] = data;
@@ -34,7 +40,7 @@ void deletePos(EPtr L, int position)
 {
     if(position < 0 || position >= L->count)
     {
-        printf("Invalid\n");
+        printf("Invalid position\n");
         return;
     }
 
@@ -62,7 +68,7 @@ int retrieve(EPtr L, int position)
 {
     if(position < 0 || position >= L->count)
     {
-        printf("Invalid\n");
+        printf("Invalid position\n");
         return -1;
     }
     return L->elem[position];
@@ -92,14 +98,15 @@ void display(EPtr L)
 
     for(int i = 0; i < L->count; i++)
     {
-        printf("%d", L->elem[i]);
+        printf("%d ", L->elem[i]);
     }
     printf("\n");
 }
 
-void makeNULL(EPtr L)
+void makeNULL(EPtr *L)
 {
-    free(L);
+    free(*L);
+    *L = NULL;
 }
 
 int main()
@@ -128,6 +135,6 @@ int main()
     insertSorted(L, 8);
     display(L);
 
-    makeNULL(L);
+    makeNULL(&L);
     return 0;
 }

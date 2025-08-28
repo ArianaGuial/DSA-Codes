@@ -9,28 +9,57 @@ typedef struct
     int max;
 } List;
 
+List initialize(List L);
+List insertPos(List L, int data, int position);
+List deletePos(List L, int position);
+int locate(List L, int data);
+List insertSorted(List L, int data);
+void display(List L);
+List resize(List L);
+
 List initialize(List L) 
 {
     L.elemPtr = (int *)malloc(sizeof(int) * LENGTH);
+    if (L.elemPtr == NULL)
+    {
+        printf("Memory allocation failed.\n");
+        exit(1);
+    }
     L.count = 0;
     L.max = LENGTH;
     return L;
 }
 
+List resize(List L) 
+{
+    int newMax = L.max * 2;
+    int *newArray = (int *)realloc(L.elemPtr, sizeof(int) * newMax);
+
+    if (newArray == NULL) 
+    {
+        printf("Memory allocation failed.\n");
+        exit(1);
+    }
+
+    L.elemPtr = newArray;
+    L.max = newMax;
+    return L;
+}
+
 List insertPos(List L, int data, int position) 
 {
-    if(position < 0 || position > L.count) 
+    if (position < 0 || position > L.count) 
     {
         printf("Invalid position.\n");
         return L;
     }
 
-    if(L.count == L.max) 
+    if (L.count == L.max) 
     {
         L = resize(L);
     }
 
-    for(int i = L.count; i > position; i--) 
+    for (int i = L.count; i > position; i--) 
     {
         L.elemPtr[i] = L.elemPtr[i - 1];
     }
@@ -42,13 +71,13 @@ List insertPos(List L, int data, int position)
 
 List deletePos(List L, int position) 
 {
-    if(position < 0 || position >= L.count) 
+    if (position < 0 || position >= L.count) 
     {
         printf("Invalid position.\n");
         return L;
     }
 
-    for(int i = position; i < L.count - 1; i++) 
+    for (int i = position; i < L.count - 1; i++) 
     {
         L.elemPtr[i] = L.elemPtr[i + 1];
     }
@@ -59,7 +88,7 @@ List deletePos(List L, int position)
 
 int locate(List L, int data) 
 {
-    for(int i = 0; i < L.count; i++) 
+    for (int i = 0; i < L.count; i++) 
     {
         if (L.elemPtr[i] == data) 
         {
@@ -71,14 +100,13 @@ int locate(List L, int data)
 
 List insertSorted(List L, int data) 
 {
-    if(L.count == L.max) 
+    if (L.count == L.max) 
     {
         L = resize(L);
     }
 
     int position = 0;
-
-    while(position < L.count && L.elemPtr[position] < data) 
+    while (position < L.count && L.elemPtr[position] < data) 
     {
         position++;
     }
@@ -96,22 +124,6 @@ void display(List L)
     }
 
     printf("\n");
-}
-
-List resize(List L) 
-{
-    int newMax = L.max * 2;
-    int *newArray = (int *)realloc(L.elemPtr, sizeof(int) * newMax);
-
-    if(newArray == NULL) 
-    {
-        printf("Memory allocation failed.\n");
-        exit(1);
-    }
-
-    L.elemPtr = newArray;
-    L.max = newMax;
-    return L;
 }
 
 int main() 
