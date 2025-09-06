@@ -1,5 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include<stdio.h>
+#include<stdlib.h>
 
 typedef struct node
 {
@@ -290,17 +290,3 @@ int main(void)
     free(list);
     return 0;
 }
-
-/*
-IT WONT RUN IN MY VS CODE; THIS IS THE OUTPUT IN C COMPILER:
-
-List: 2 -> 6 -> 5 -> NULL
-List: 2 -> 6 -> 5 -> 7 -> NULL
-List: 2 -> 6 -> 5 -> 7 -> NULL
-List: 6 -> 5 -> 7 -> NULL
-List: 6 -> 5 -> NULL
-List: 6 -> 5 -> NULL
-Value at index 1: -1
-Index of value 5: 1
-List: NULL
-*/
