@@ -6,15 +6,10 @@
 typedef struct
 {
     int items[MAX];
-    int count;
-} List;
-
-typedef struct 
-{
-    List list;
     int front;
     int rear;
-} Queue;
+ } Queue;
+
 
 Queue* initialize()
 {
@@ -26,74 +21,64 @@ Queue* initialize()
         return NULL;
     }
 
-    q->list.count = 0;
-    q->front = -1;
-    q->rear = -1;
+    q->front = 1;
+    q->rear = 0;
 
     return q;
 }
 
+int isEmpty(Queue *q)
+{
+    return q->front == (q->rear + 1) % MAX;
+}
+
+int isFull(Queue *q)
+{
+    return q->front == (q->rear + 2) % MAX;
+}
+
 void enqueue(Queue *q, int value)
 {
-    if(q->list.count == MAX)
+    if(isFull(q))
     {
         printf("Cannot enqueue %d, queue is full\n", value);
         return;
     }
 
-    if(q->list.count == 0)
-    {
-        q->front = q->rear = 0;
-    }
-    else
-    {
-        q->rear = (q->rear + 1) % MAX;
-    }
-
-    q->list.items[q->rear] = value;
-    q->list.count++;
-
+    q->rear = (q->rear + 1) % MAX;
+    q->items[q->rear] = value;
     printf("Enqueued %d\n", value);
 }
 
 int dequeue(Queue *q)
 {
-    if(q->list.count == 0)
+    if(isEmpty(q))
     {
         printf("Cannot dequeue, queue is empty\n");
         return -1;
     }
 
-    int value = q->list.items[q->front];
+    int value = q->items[q->front];
+    q->front = (q->front + 1) % MAX;
 
-    if(q->list.count == 1)
-    {
-        q->front = q->rear = -1;
-    }
-    else
-    {
-        q->front = (q->front + 1) % MAX;
-    }
-
-    q->list.count--;
     printf("Dequeued %d\n", value);
     return value;
 }
 
 int frontValue(Queue *q)
 {
-    if(q->list.count == 0)
+    if(isEmpty(q))
     {
         printf("No front element, queue is empty\n");
         return -1;
     }
 
-    return q->list.items[q->front];
+    return q->items[q->front];
 }
 
 void displayQueue(Queue *q)
 {
-    if(q->list.count == 0)
+    if(isEmpty(q))
     {
         printf("Queue is empty\n");
         return;
@@ -103,9 +88,9 @@ void displayQueue(Queue *q)
 
     int i = q->front;
 
-    for(int c = 0; c < q->list.count; c++)
+    while(i != (q->rear + 1) % MAX)
     {
-        printf("%d\n", q->list.items[i]);
+        printf("%d\n", q->items[i]);
         i = (i + 1) % MAX;
     }
 }
@@ -114,26 +99,20 @@ int main()
 {
     Queue *Q = initialize();
 
-    if(Q ==NULL)
+    if(Q == NULL)
     {
         return 1;
     }
 
-    enqueue(Q, 1);
-    enqueue(Q, 3);
-    enqueue(Q, 2);
-    enqueue(Q, 5);
+    enqueue(Q, 10);
+    enqueue(Q, 20);
+    enqueue(Q, 30);
     displayQueue(Q);
 
-    enqueue(Q, 4);
+    dequeue(Q);
     displayQueue(Q);
 
-    int value = dequeue(Q);
-
-    printf("Value dequeued: %d\n", value);
-    displayQueue(Q);
-
-    printf("Front most element: %d\n", frontValue(Q));
+    printf("Front element: %d\n", frontValue(Q));
 
     free(Q);
     return 0;
