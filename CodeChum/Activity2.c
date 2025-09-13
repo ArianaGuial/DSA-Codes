@@ -179,3 +179,87 @@ int main()
     
     return 0;
 }
+
+/*
+SAMPLE OUTPUT:
+--- Pharmacy Queueing System ---
+1. Enter Regular Queue
+2. Enter Priority Queue
+3. Call Next Customer
+4. Display Queues
+5. Exit
+Enter your choice: 1
+You have entered the Regular queue. Your number is 1.
+
+--- Pharmacy Queueing System ---
+1. Enter Regular Queue
+2. Enter Priority Queue
+3. Call Next Customer
+4. Display Queues
+5. Exit
+Enter your choice: 1
+You have entered the Regular queue. Your number is 2.
+
+--- Pharmacy Queueing System ---
+1. Enter Regular Queue
+2. Enter Priority Queue
+3. Call Next Customer
+4. Display Queues
+5. Exit
+Enter your choice: 2
+You have entered the Priority queue. Your number is 3.
+
+--- Pharmacy Queueing System ---
+1. Enter Regular Queue
+2. Enter Priority Queue
+3. Call Next Customer
+4. Display Queues
+5. Exit
+Enter your choice: 1
+You have entered the Regular queue. Your number is 4.
+
+--- Pharmacy Queueing System ---
+1. Enter Regular Queue
+2. Enter Priority Queue
+3. Call Next Customer
+4. Display Queues
+5. Exit
+Enter your choice: 3
+Calling next customer from Priority Queue. Customer number: 3
+
+--- Pharmacy Queueing System ---
+1. Enter Regular Queue
+2. Enter Priority Queue
+3. Call Next Customer
+4. Display Queues
+5. Exit
+Enter your choice: 3
+Calling next customer from Regular Queue. Customer number: 1
+
+--- Pharmacy Queueing System ---
+1. Enter Regular Queue
+2. Enter Priority Queue
+3. Call Next Customer
+4. Display Queues
+5. Exit
+Enter your choice: 3
+Calling next customer from Regular Queue. Customer number: 2
+
+--- Pharmacy Queueing System ---
+1. Enter Regular Queue
+2. Enter Priority Queue
+3. Call Next Customer
+4. Display Queues
+5. Exit
+Enter your choice: 3
+Calling next customer from Regular Queue. Customer number: 4
+
+--- Pharmacy Queueing System ---
+1. Enter Regular Queue
+2. Enter Priority Queue
+3. Call Next Customer
+4. Display Queues
+5. Exit
+Enter your choice: 5
+Exiting program. Goodbye!
+*/

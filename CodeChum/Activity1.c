@@ -187,3 +187,64 @@ int main()
 
     return 0;
 }
+
+/*
+SAMPLE OUTPUT:
+--- Warehouse Inventory Management System ---
+1. Push a container
+2. Pop a container
+3. Check if a container exists
+4. Display all stacks
+5. Exit
+Enter your choice: 1
+Enter container ID to push: 10
+Container 10 pushed successfully.
+
+--- Warehouse Inventory Management System ---
+1. Push a container
+2. Pop a container
+3. Check if a container exists
+4. Display all stacks
+5. Exit
+Enter your choice: 1
+Enter container ID to push: 20
+Container 20 pushed successfully.
+
+--- Warehouse Inventory Management System ---
+1. Push a container
+2. Pop a container
+3. Check if a container exists
+4. Display all stacks
+5. Exit
+Enter your choice: 1
+Enter container ID to push: 30
+Container 30 pushed successfully.
+
+--- Warehouse Inventory Management System ---
+1. Push a container
+2. Pop a container
+3. Check if a container exists
+4. Display all stacks
+5. Exit
+Enter your choice: 4
+
+--- Stack 1 ---
+30
+20
+10
+
+--- Stack 2 ---
+Stack is empty.
+
+--- Stack 3 ---
+Stack is empty.
+
+--- Warehouse Inventory Management System ---
+1. Push a container
+2. Pop a container
+3. Check if a container exists
+4. Display all stacks
+5. Exit
+Enter your choice: 5
+Exiting program.
+*/
