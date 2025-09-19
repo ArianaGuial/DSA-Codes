@@ -92,6 +92,127 @@ void insertLast(int* L, VHeap* V, int elem)
     }
 }
 
+void delete(List *L, VHeap *V, int elem)
+{
+    int prev = -1;
+    int curr = *L;
+
+    while(curr != -1 && V->H[curr].elem != elem)
+    {
+        prev = curr;
+        curr = V->H[curr].next;
+    }
+
+    if(curr == -1)
+    {
+        printf("Element %d not found\n", elem);
+        return;
+    }
+
+    if(prev == -1)
+    {
+        *L = V->H[curr].next;
+    }
+    else
+    {
+        V->H[prev].next = V->H[curr].next;
+    }
+
+    deallocSpace(V, curr);
+    printf("DELETED %d\n", elem);
+}
+
+// void deleteAll(List *L, VHeap *V, int elem)
+// {
+//     int prev = -1;
+//     int curr = *L;
+
+//     while(curr != -1)
+//     {
+//         if(V->H[curr].elem == elem)
+//         {
+//             int toDelete = curr;
+//             curr = V->H[curr].next;
+
+//             if(prev == -1)
+//             {
+//                 *L = curr;
+//             }
+//             else
+//             {
+//                 V->H[prev].next = curr;
+//             }
+
+//             deallocSpace(V, toDelete);
+//             printf("DELETED %d\n", elem);
+//         }
+//         else
+//         {
+//             prev = curr;
+//             curr = V->H[curr].next;
+//         }
+//     }
+// }
+
+void display(int L, VHeap V)
+{
+    if(L == -1)
+    {
+        printf("List is empty\n");
+        return;
+    }
+
+    printf("\nList contents: \n");
+
+    int curr = L;
+
+    while(curr != -1)
+    {
+        printf("%d ", V.H[curr].elem);
+        curr = V.H[curr].next;
+    }
+
+    printf("\n");
+}
+
+void insertPos(int* L, VHeap* V, int elem)
+{
+    int index = allocSpace(V);
+
+    if(index == -1)
+    {
+        printf("No space available\n");
+        return;
+    }
+
+    V->H[index].elem = elem;
+
+    int position;
+    printf("Enter position to insert: ");
+    scanf("%d", &position);
+
+    if(position == 0 || *L == -1)
+    {
+        V->H[index].next = *L;
+        *L = index;
+        return;
+    }
+
+    int curr = *L;
+    int prev = -1;
+    int count = 0;
+
+    while(curr != -1 && count < position)
+    {   
+        prev = curr;
+        curr = V->H[curr].next;
+        count++;
+    }
+
+    V->H[index].next = curr;
+    V->H[prev].next = index;
+}
+
 void insertSorted(int* L, VHeap* V, int elem)
 {
     int index = allocSpace(V);
@@ -125,37 +246,7 @@ void insertSorted(int* L, VHeap* V, int elem)
     }
 }
 
-void delete(List *L, VHeap *V, int elem)
-{
-    int prev = -1;
-    int curr = *L;
-
-    while(curr != -1 && V->H[curr].elem != elem)
-    {
-        prev = curr;
-        curr = V->H[curr].next;
-    }
-
-    if(curr == -1)
-    {
-        printf("Element %d not found\n", elem);
-        return;
-    }
-
-    if(prev == -1)
-    {
-        *L = V->H[curr].next;
-    }
-    else
-    {
-        V->H[prev].next = V->H[curr].next;
-    }
-
-    deallocSpace(V, curr);
-    printf("DELETED %d\n", elem);
-}
-
-void deleteAll(List *L, VHeap *V, int elem)
+void deleteAllOccurrence(int* L, VHeap* V, int elem)
 {
     int prev = -1;
     int curr = *L;
@@ -165,6 +256,7 @@ void deleteAll(List *L, VHeap *V, int elem)
         if(V->H[curr].elem == elem)
         {
             int toDelete = curr;
+
             curr = V->H[curr].next;
 
             if(prev == -1)
@@ -177,7 +269,7 @@ void deleteAll(List *L, VHeap *V, int elem)
             }
 
             deallocSpace(V, toDelete);
-            printf("DELETED %d\n", elem);
+            printf("DELETED %d", elem);
         }
         else
         {
@@ -187,27 +279,6 @@ void deleteAll(List *L, VHeap *V, int elem)
     }
 }
 
-void display(int L, VHeap V)
-{
-    if(L == -1)
-    {
-        printf("List is empty\n");
-        return;
-    }
-
-    printf("\nList contents: \n");
-
-    int curr = L;
-
-    while(curr != -1)
-    {
-        printf("%d ", V.H[curr].elem);
-        curr = V.H[curr].next;
-    }
-
-    printf("\n");
-}
-
 int main()
 {
     VHeap V;
@@ -215,21 +286,30 @@ int main()
 
     initialize(&V);
 
+    printf("Inserting at front: \n");
     insertFirst(&L, &V, 3);
     insertFirst(&L, &V, 2);
     insertFirst(&L, &V, 1);
     display(L, V);
 
+    printf("Inserting at end: \n");
     insertLast(&L, &V, 4);
     display(L, V);
-    
+
+    printf("Deleting one occurrence of 3: \n");
     delete(&L, &V, 3);
     display(L, V);
 
+    printf("Inserting sorted 2: \n");
     insertSorted(&L, &V, 2);
     display(L, V);
 
-    deleteAll(&L, &V, 3);
+    printf("Deleting all occurrences of 2: \n");
+    deleteAllOccurrence(&L, &V, 2);
+    display(L, V);
+
+    printf("Inserting at specific position: \n");
+    insertPos(&L, &V, 99);
     display(L, V);
 
     return 0;
