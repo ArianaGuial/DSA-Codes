@@ -3,6 +3,8 @@
 #include <stdbool.h>
 #define MAX 10
 
+// ARRAY QUEUE - Pharmacy Queueing System
+
 typedef struct 
 {
     int items[MAX];

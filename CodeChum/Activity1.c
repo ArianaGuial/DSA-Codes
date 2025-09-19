@@ -3,6 +3,8 @@
 #include <stdbool.h>
 #define MAX 5
 
+// ARRAY STACK - Warehouse Inventory System
+
 typedef struct 
 {
     int items[MAX];

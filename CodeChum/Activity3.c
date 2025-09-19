@@ -3,6 +3,8 @@
 #include <string.h>
 #define MAX_SIZE 20
 
+// CURSOR BASED - Knowledge Base
+
 typedef Cell HeapSpace[MAX_SIZE];
 
 typedef struct 
@@ -201,13 +203,13 @@ void runTests(int test_choice) {
     int test_L = -1;
     int test_id_counter = 1;
 
-    Article createTestArticle(int id, const char* title, const char* content) {
-        Article a;
-        a.id = id;
-        strcpy(a.title, title);
-        strcpy(a.content, content);
-        return a;
-    }
+    // Article createTestArticle(int id, const char* title, const char* content) {
+    //     Article a;
+    //     a.id = id;
+    //     strcpy(a.title, title);
+    //     strcpy(a.content, content);
+    //     return a;
+    // }
 
     printf("\n--- Running Test Case %d ---\n", test_choice);
     initVHeap(&test_heap);
