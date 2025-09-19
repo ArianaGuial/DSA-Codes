@@ -21,7 +21,7 @@ void initialize(VHeap *V)
     V->avail = 0;
 
     for(int i = 0; i < MAX -1; i++)
-    {
+    { 
         V->H[i].next = i + 1;
     }
 
