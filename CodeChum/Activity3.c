@@ -131,7 +131,9 @@ void viewArticles(VHeap V, int L)
     
     while(curr != -1) 
     {
-        printf("ID: %d | Title: %s\n", V.H[curr].article.id, V.H[curr].article.title);
+        printf("ID: %d | ", V.H[curr].article.id);
+        printf("Title: %s\n", V.H[curr].article.title);
+
         curr = V.H[curr].next;
     }
     printf("------------------------\n\n");
