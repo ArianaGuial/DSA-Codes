@@ -61,7 +61,7 @@ int dequeue(Queue* q)
 
 bool isFull(Queue* q)
 {
-    return q->list.count == MAX;
+    return q->list.count == MAX;\
 }
 
 bool isEmpty(Queue* q)
