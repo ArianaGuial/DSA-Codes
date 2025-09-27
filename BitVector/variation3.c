@@ -64,3 +64,18 @@ int main()
 
     return 0;
 }
+
+/*
+Why it works:
+
+Set is a Boolean array of size 20.
+setBit(s, 0) sets index 0 to TRUE.
+setBit(s, 4) sets index 4 to TRUE.
+clearBit(s, 0) resets index 0 to FALSE.
+
+So only index 4 remains set.
+
+You’re using a readable enum to represent binary states.
+true and false are just aliases for 1 and 0, but make the code more expressive.
+This is great for clarity, especially in educational or logic-heavy contexts.
+*/

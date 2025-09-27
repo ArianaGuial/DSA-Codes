@@ -59,3 +59,16 @@ int main()
 
     return 0;
 }
+
+/* 
+Why it works:
+
+setBit(bv, 1) sets index 1 to 1.
+setBit(bv, 3) sets index 3 to 1.
+clearBit(bv, 1) resets index 1 to 0.
+
+So only index 3 remains set. All others are 0.
+
+You’re directly assigning values to array indices.
+testBit() simply returns the value at that index.
+*/
