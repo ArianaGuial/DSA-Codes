@@ -27,7 +27,7 @@ void clearBit(Set *s, int index)
 
 int testBit(Set s, int index)
 {
-    if(index >= 0 && index > MAX)
+    if(index >= 0 && index < MAX)
     {
         return(s.bits >> index) & 1;
     }
