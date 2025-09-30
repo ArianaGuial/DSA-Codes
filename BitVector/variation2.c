@@ -1,64 +1,121 @@
-#include<stdio.h>
-#include<stdlib.h>
-#define MAX 20
+#include <stdio.h>
+#include <stdbool.h>
 
-// variation 2 : using bit fields inside a struct
+#define BIT_SIZE 8 
 
-typedef struct
+typedef struct 
 {
-    unsigned int bits : MAX;
+    unsigned int field : BIT_SIZE;  
 } Set;
 
-void setBit(Set *s, int index)
+void initialize(Set *set) 
 {
-    if(index >= 0 && index < MAX)
+    set->field = 0;
+}
+
+void insert(Set *set, int element) 
+{
+    if (element >= 0 && element < BIT_SIZE) 
     {
-        s->bits |= (1 << index);
+        set->field |= (1 << element);
     }
 }
 
-void clearBit(Set *s, int index)
+void delete(Set *set, int element) 
 {
-    if(index >= 0 && index < MAX)
+    if (element >= 0 && element < BIT_SIZE) 
     {
-        s->bits &= ~(1 << index);
+        set->field &= ~(1 << element);
     }
 }
 
-int testBit(Set s, int index)
+bool find(Set set, int element) 
 {
-    if(index >= 0 && index < MAX)
+    if (element >= 0 && element < BIT_SIZE) 
     {
-        return(s.bits >> index) & 1;
+        return (set.field & (1 << element)) != 0;
     }
-
-    return -1;
+    return false;
 }
 
-void display(Set s)
+Set unionSet(Set A, Set B) 
 {
-    for(int i = MAX - 1; i >=0; i--)
-    {
-        printf("%d ", (s.bits >> i) & 1);
-    }
-
-    printf("\n");
+    Set C;
+    C.field = A.field | B.field;
+    return C;
 }
 
-int main()
+Set intersection(Set A, Set B)
 {
-    Set s = {0};
+    Set C;
+    C.field = A.field & B.field;
+    return C;
+}
 
-    setBit(&s, 1);
-    setBit(&s, 3);
-    clearBit(&s, 1);
+Set difference(Set A, Set B) 
+{
+    Set C;
+    C.field = A.field & (~B.field);
+    return C;
+}
 
-    printf("\nBit Field content: ");
-    display(s);
+void display(Set set) 
+{
+    printf("{");
+    bool first = true;
 
-    printf("Test bit 3: %d", testBit(s, 3));
-    printf("\nTest bit 1: %d", testBit(s, 1));
-    printf("\n");
+    for (int i = 0; i < BIT_SIZE; i++) 
+    {
+        if (set.field & (1 << i)) 
+        {
+            if (!first)
+            {
+                printf(", ");
+            }
+
+            printf("%d", i);
+            first = false;
+        }
+    }
+    printf("}\n");
+}
+
+int main() 
+{
+    Set A, B, C;
+
+    initialize(&A);
+    insert(&A, 0);
+    insert(&A, 4);
+    insert(&A, 5);
+    printf("\nSet A: ");
+    display(A);
+
+    delete(&A, 5);
+    delete(&A, 4);
+    printf("Set A after deletions: ");
+    display(A);
+
+    insert(&A, 4);
+    insert(&A, 5);
+    B.field = 36;
+    printf("Set B: ");
+    display(B);
+
+    C = unionSet(A, B);
+    printf("Union of A and B: ");
+    display(C); 
+
+    C = intersection(A, B);
+    printf("Intersection of A and B: ");
+    display(C);
+
+    C = difference(A, B);
+    printf("Difference A - B: ");
+    display(C); 
+
+    printf("Find 5 in A: %s\n", find(A, 5) ? "true" : "false");
+    printf("Find 2 in A: %s\n", find(A, 2) ? "true" : "false");
 
     return 0;
 }

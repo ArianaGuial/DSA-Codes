@@ -1,74 +1,116 @@
 #include <stdio.h>
-#include <stdlib.h>
-#define MAX 20
+#include <stdbool.h>
 
-// variation 1 : using a char element to hold an int value
+#define BIT_SIZE (8 * sizeof(unsigned char))
 
-typedef char BitVector[MAX];
-
-void setBit(BitVector bv, int index) 
+void initialize(unsigned char *set) 
 {
-    if (index >= 0 && index < MAX) 
+    *set = 0;
+}
+
+void insert(unsigned char *set, int element) 
+{
+    if (element >= 0 && element < BIT_SIZE) 
     {
-        bv[index] = 1;
+        *set |= (1 << element);
     }
 }
 
-void clearBit(BitVector bv, int index) 
+void delete(unsigned char *set, int element) 
 {
-    if (index >= 0 && index < MAX) 
+    if (element >= 0 && element < BIT_SIZE) 
     {
-        bv[index] = 0;
+        *set &= ~(1 << element);
     }
 }
 
-int testBit(BitVector bv, int index) 
+bool find(unsigned char set, int element) 
 {
-    if (index >= 0 && index < MAX) 
+    if (element >= 0 && element < BIT_SIZE) 
     {
-        return bv[index];
+        return (set & (1 << element)) != 0;
     }
 
-    return -1;
+    return false;
 }
 
-void display(BitVector bv) 
+unsigned char unionSet(unsigned char A, unsigned char B) 
 {
-    for (int i = 0; i < MAX; i++) 
+    return A | B;
+}
+
+unsigned char intersection(unsigned char A, unsigned char B) 
+{
+    return A & B;
+}
+
+unsigned char difference(unsigned char A, unsigned char B) 
+{
+    return A & (~B);
+}
+
+void display(unsigned char set) 
+{
+    printf("{");
+
+    bool first = true;
+
+    for (int i = 0; i < BIT_SIZE; i++) 
     {
-        printf("%d ", bv[i]);
+        if (set & (1 << i)) 
+        {
+            if (!first) 
+            {
+                printf(", ");
+            }
+
+            printf("%d", i);
+            first = false;
+        }
     }
 
-    printf("\n");
+    printf("}\n");
 }
 
 int main() 
 {
-    BitVector bv = {0};
+    unsigned char A, B, C;
 
-    setBit(bv, 1);
-    setBit(bv, 3);
-    clearBit(bv, 1);
+    initialize(&A);
+    insert(&A, 1);
+    insert(&A, 6);
+    printf("\nSet A after inserts: ");
+    display(A);
 
-    printf("\nBit Field contents: ");
-    display(bv);
+    delete(&A, 6);
+    printf("Set A after deleting 6: ");
+    display(A); 
 
-    printf("Test bit 3: %d", testBit(bv, 3));
-    printf("\nTest bit 1: %d", testBit(bv, 1));
-    printf("\n");
+    delete(&A, 1);
+    printf("Set A after deleting 1: ");
+    display(A);
+
+    insert(&A, 1);
+    insert(&A, 6);
+
+    B = 200;
+    printf("Set B: ");
+    display(B);
+
+    C = unionSet(A, B);
+    printf("Union of A and B: ");
+    display(C);
+
+    C = intersection(A, B);
+    printf("Intersection of A and B: ");
+    display(C);
+
+    C = difference(A, B);
+    printf("Difference A - B: ");
+    display(C);
+
+    printf("Find 6 in A: %s\n", find(A, 6) ? "true" : "false");
+    printf("Find 3 in A: %s\n", find(A, 3) ? "true" : "false");
 
     return 0;
 }
-
-/* 
-Why it works:
-
-setBit(bv, 1) sets index 1 to 1.
-setBit(bv, 3) sets index 3 to 1.
-clearBit(bv, 1) resets index 1 to 0.
-
-So only index 3 remains set. All others are 0.
-
-You’re directly assigning values to array indices.
-testBit() simply returns the value at that index.
-*/
